@@ -24,9 +24,9 @@ class AmazonReviewsSpider(Spider):
                     'product_id': self.product_id,
                     'review_id': item.css('div.a-section.celwidget::attr(id)').extract_first().split('-')[1],
                     'date': item.css('[data-hook="review-date"]::text').extract_first(),
-                    'stars': item.css('a::attr(title)').extract_first(),
-                    'review_Title': item.css('[data-hook="review-title"]::text').extract_first(),
-                    'review': ' '.join(item.css('span.review-text::text').extract())
+                    'stars': item.css('a::attr(title)').re_first(r'^([0-9]+).*'),
+                    'review_title': item.css('[data-hook="review-title"] span::text').extract_first(),
+                    'review': ' '.join(item.css('[data-hook="review-body"] span::text').extract())
             }
 
             next_page = response.css('.a-last > a::attr(href)').extract_first()
