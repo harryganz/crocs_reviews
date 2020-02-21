@@ -7,12 +7,15 @@ class AmazonProductsSpider(Spider):
     name = 'amazon_products'
     allowed_domains = ['amazon.com']
 
-    def __init__(self, brand=None, max_pages=5, *args, **kwargs):
+    def __init__(self, brand=None, max_pages=5, outfile=None, *args, **kwargs):
         super(AmazonProductsSpider, self).__init__(*args, **kwargs)
         self.brand = brand
         self.max_pages = int(max_pages)
+        self.outfile=outfile
         if not self.brand:
             raise Exception("missing brand")
+        if not self.outfile:
+            self.outfile = '{0}.csv'.format(self.brand)
         self.start_urls = ['https://www.amazon.com/s?k=Shoe&bbn=7147440011&rh=n%3A7141123011%2Cn%3A7147440011%2Cp_89%3A{0}'.format(self.brand)]
 
     def parse(self, response):
