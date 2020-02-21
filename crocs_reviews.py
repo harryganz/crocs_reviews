@@ -48,6 +48,33 @@ def main():
         except subprocess.CalledProcessError as err:
             print(err)
             sys.exit(2)
+    with open(infile, 'r', newline='') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            brand = row['brand']
+            product_id = row['product_id']
+            product_name = row['product_name']
+            try:
+                subprocess.check_call([
+                    'scrapy',
+                    'crawl',
+                    '-a',
+                    'brand={0}'.format(brand),
+                    '-a',
+                    'product_id={0}'.format(product_id),
+                    '-a',
+                    'product_name={0}'.format(product_name),
+                    '-a',
+                    'outfile={0}'.format(outfile),
+                    '-a',
+                    'max_pages={0}'.format(1),
+                    'amazon_reviews'
+                ])
+            except subprocess.CalledProcessError as err:
+                print(err)
+                sys.exit(2)
+
+
 
 def usage():
     print("crocs_reviews.py -i <input_file> -o <output_file> -b <brand_name> [-b <brand_name> ...]")
