@@ -11,9 +11,10 @@ from scrapy.spiders import Spider
 class AmazonReviewsSpider(Spider):
     name = 'amazon_reviews'
 
-    def __init__(self, product_id=None, *args, **kwargs):
+    def __init__(self, product_id=None, max_pages=10, *args, **kwargs):
         super(AmazonReviewsSpider, self).__init__(*args, **kwargs)
         self.product_id = product_id
+        self.max_pages = int(max_pages)
         if not self.product_id:
             raise Exception("missing product_id")
         self.start_urls = ['https://www.amazon.com/product-reviews/{0}/ref=dpx_acr_txt?showViewpoints=1'.format(self.product_id)]
@@ -30,5 +31,6 @@ class AmazonReviewsSpider(Spider):
             }
 
             next_page = response.css('.a-last > a::attr(href)').extract_first()
-            if next_page is not None:
+            self.max_pages = self.max_pages - 1
+            if next_page is not None and self.max_pages > 0:
                 yield response.follow(next_page, callback=self.parse)
