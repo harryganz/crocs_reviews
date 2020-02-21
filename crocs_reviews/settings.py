@@ -15,7 +15,7 @@ SPIDER_MODULES = ['crocs_reviews.spiders']
 NEWSPIDER_MODULE = 'crocs_reviews.spiders'
 
 # Change log level
-LOG_LEVEL=INFO
+LOG_LEVEL='INFO'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
