@@ -14,6 +14,9 @@ BOT_NAME = 'crocs_reviews'
 SPIDER_MODULES = ['crocs_reviews.spiders']
 NEWSPIDER_MODULE = 'crocs_reviews.spiders'
 
+# Change log level
+LOG_LEVEL=INFO
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/7.0.540.0 Safari/534.1'
