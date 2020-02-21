@@ -19,11 +19,11 @@ class AmazonProductsSpider(Spider):
         self.start_urls = ['https://www.amazon.com/s?k=Shoe&bbn=7147440011&rh=n%3A7141123011%2Cn%3A7147440011%2Cp_89%3A{0}'.format(self.brand)]
 
     def parse(self, response):
-        for product in response.css('span[cel_widget_id="SEARCH_RESULTS-SEARCH_RESULTS"]'):
+        for product in response.css('div[data-asin]'):
             yield {
                     'brand': self.brand,
                     'product_name': product.css('a.a-link-normal.a-text-normal span.a-text-normal::text').extract_first(),
-                    'product_id': product.css('a.a-link-normal.a-text-normal::attr(href)').re_first(r'.*/dp/(.+)/.*')
+                    'product_id': product.attrib['data-asin']
             }
 
             next_page = response.css('.a-last > a::attr(href)').extract_first()
