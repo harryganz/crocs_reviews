@@ -11,12 +11,21 @@ from scrapy.spiders import Spider
 class AmazonReviewsSpider(Spider):
     name = 'amazon_reviews'
 
-    def __init__(self, product_id=None, max_pages=10, *args, **kwargs):
+    def __init__(self, product_id=None, brand=None, product_name=None, max_pages=10, outfile=None, *args, **kwargs):
         super(AmazonReviewsSpider, self).__init__(*args, **kwargs)
         self.product_id = product_id
+        self.brand = brand
+        self.product_name = product_name
         self.max_pages = int(max_pages)
+        self.outfile = outfile
         if not self.product_id:
             raise Exception("missing product_id")
+        if not self.brand:
+            raise Exception("missing brand")
+        if not self.product_name:
+            raise Exception("missing product_name")
+        if not self.outfile:
+            self.outfile = '{0}-{1}-{2}.csv'.format(self.brand, self.product_name, self.product_id)
         self.start_urls = ['https://www.amazon.com/product-reviews/{0}/ref=dpx_acr_txt?showViewpoints=1'.format(self.product_id)]
         
     def parse(self, response):
