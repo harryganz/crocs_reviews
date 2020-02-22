@@ -31,6 +31,8 @@ class AmazonReviewsSpider(Spider):
     def parse(self, response):
         for item in response.css('.a-section.review'):
             yield {
+                    'brand': self.brand,
+                    'product_name': self.product_name,
                     'product_id': self.product_id,
                     'review_id': item.css('div.a-section.celwidget::attr(id)').extract_first().split('-')[1],
                     'date': item.css('[data-hook="review-date"]::text').extract_first(),
