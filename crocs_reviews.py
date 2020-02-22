@@ -42,7 +42,7 @@ def main():
                 '-a',
                 'outfile={0}'.format(infile),
                 '-a',
-                'max_pages={0}'.format(1),
+                'max_pages={0}'.format(5),
                 'amazon_products'
             ])
         except subprocess.CalledProcessError as err:
@@ -67,7 +67,7 @@ def main():
                     '-a',
                     'outfile={0}'.format(outfile),
                     '-a',
-                    'max_pages={0}'.format(1),
+                    'max_pages={0}'.format(10),
                     'amazon_reviews'
                 ])
             except subprocess.CalledProcessError as err:
